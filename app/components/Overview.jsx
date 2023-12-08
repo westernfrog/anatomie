@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from "react";
 import Card from "./Card";
-import utf8 from "utf8";
+import { useSearchParams } from "next/navigation";
 
 export default function Overview() {
+  const router = useSearchParams();
+  const query = router.get("query");
   const [accessToken, setAccessToken] = useState(null);
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
@@ -33,9 +35,12 @@ export default function Overview() {
   useEffect(() => {
     const fetchSearch = async () => {
       try {
-        const response = await fetch("/api/search", {
-          method: "GET",
-        });
+        const response = await fetch(
+          `/api/search?query=${query ? query : "Heart"}`,
+          {
+            method: "GET",
+          }
+        );
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -49,15 +54,12 @@ export default function Overview() {
     };
 
     fetchSearch();
-  }, []);
-
-  console.log(accessToken);
-  console.log(data);
+  }, [query]);
 
   return (
     <>
-      <main className="p-8">
-        <div className="grid lg:grid-cols-12 gap-8">
+      <main className="lg:px-8 px-6 py-8">
+        <div className="lg:grid grid-cols-12 flex flex-col gap-8">
           {data &&
             data.responseObj.results
               .slice(0, 20)

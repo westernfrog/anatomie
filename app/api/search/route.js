@@ -1,8 +1,9 @@
-export async function GET() {
-  const url =
-    "https://human.biodigital.com/search?k=heart&t=%22live%22&zspace=false&il=en&ol=en&odns=true&limit=10";
-
+export async function GET(request) {
   try {
+    const { searchParams } = new URL(request.url);
+    const query = searchParams.get("query");
+    const url = `https://human.biodigital.com/search?k=${query}&t=%22live%22&zspace=false&il=en&ol=en&odns=true&limit=10`;
+
     const response = await fetch(url);
     const responseObj = await response.json();
 
