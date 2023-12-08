@@ -7,30 +7,8 @@ import { useSearchParams } from "next/navigation";
 export default function Overview() {
   const router = useSearchParams();
   const query = router.get("query");
-  const [accessToken, setAccessToken] = useState(null);
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchAccessToken = async () => {
-      try {
-        const response = await fetch("/api/accessToken", {
-          method: "POST",
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          setAccessToken(data.accessToken);
-        } else {
-          console.error("Error fetching access token:", response.statusText);
-        }
-      } catch (error) {
-        console.error("Error fetching access token:", error);
-      }
-    };
-
-    fetchAccessToken();
-  }, []);
 
   useEffect(() => {
     const fetchSearch = async () => {
