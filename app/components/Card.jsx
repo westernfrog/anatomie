@@ -1,13 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Card(props) {
+  const router = useRouter();
+  const handleInfo = (module_name) => {
+    router.push(`/model?string=${module_name}`);
+  };
   return (
     <>
-      <Link
-        target="_blank"
-        href={"/"}
+      <div
         className="col-span-6 relative text-neutral-300 lg:flex items-center justify-center"
+        onClick={() => handleInfo(props.module_name)}
       >
         <Image
           src={`https://human.biodigital.com${props.url}`}
@@ -25,7 +29,7 @@ export default function Card(props) {
             {props.desc.slice(0, 180)}...
           </p>
         </div>
-      </Link>
+      </div>
     </>
   );
 }

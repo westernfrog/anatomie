@@ -69,6 +69,7 @@ export default function Overview() {
                   title={item.title}
                   desc={item.description}
                   url={item.thumbnail_url}
+                  module_name={item.module_name}
                 />
               ))}
         </div>
