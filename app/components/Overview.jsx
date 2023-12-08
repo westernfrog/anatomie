@@ -6,7 +6,8 @@ import utf8 from "utf8";
 
 export default function Overview() {
   const [accessToken, setAccessToken] = useState(null);
-  const [search, setSearch] = useState(null);
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchAccessToken = async () => {
@@ -36,14 +37,14 @@ export default function Overview() {
           method: "GET",
         });
 
-        if (response.ok) {
-          const data = await response.json();
-          setSearch(data);
-        } else {
-          console.error("Error fetching access token:", response.statusText);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
-      } catch (error) {
-        console.error("Error fetching access token:", error);
+
+        const result = await response.json();
+        setData(result);
+      } catch (err) {
+        setError(err.message);
       }
     };
 
@@ -51,11 +52,26 @@ export default function Overview() {
   }, []);
 
   console.log(accessToken);
-  console.log(search);
+  console.log(data);
 
   return (
     <>
-      <main className="p-8 my-6"></main>
+      <main className="p-8">
+        <div className="grid lg:grid-cols-12 gap-8">
+          {data &&
+            data.responseObj.results
+              .slice(0, 20)
+              .map((item, index) => (
+                <Card
+                  key={index}
+                  title={item.title}
+                  desc={item.description}
+                  url={item.thumbnail_url}
+                />
+              ))}
+        </div>
+        {error && <p>Error: {error}</p>}
+      </main>
     </>
   );
 }

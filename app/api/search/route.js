@@ -5,7 +5,6 @@ export async function GET() {
   try {
     const response = await fetch(url);
     const responseObj = await response.json();
-    console.log(responseObj);
 
     return Response.json({ responseObj });
   } catch (error) {
