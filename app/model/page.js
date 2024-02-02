@@ -9,7 +9,7 @@ export default function Model() {
     <>
       <iframe
         className="w-screen h-screen"
-        src={`https://human.biodigital.com/viewer/?m=${string}&ui-menu=false&ui-panel=false&dk=9149a1357e3e12fa2a27fe0a7c4ae0db46ef1822`}
+        src={`https://human.biodigital.com/viewer/?m=${string}&ui-menu=false&ui-panel=false&dk=671d60d629ed28d550258d94e314a59cb731dc37`}
       ></iframe>
     </>
   );
